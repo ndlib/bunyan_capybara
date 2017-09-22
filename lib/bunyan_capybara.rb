@@ -33,7 +33,7 @@ module Bunyan
     entries.each do |entry|
       application_name_under_test = entry.split('/').last
       logger = Logging.logger[application_name_under_test]
-      log_filename = File.expand_path("../../../bunyan_capybara/logs/#{application_name_under_test}.log", __FILE__)
+      log_filename = File.expand_path("~/git/QA_tests/logs/#{application_name_under_test}.log", __FILE__)
       logger.add_appenders('stdout', Logging.appenders.file(log_filename, layout: layout))
       logger.level = config.fetch('LOG_LEVEL', DEFAULT_LOG_LEVEL).to_sym
     end
