@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["mhallwac@nd.edu"]
 
   spec.summary       = %q{Logger}
-  spec.description   = %q{adds loggin capabilities}
+  spec.description   = %q{adds logging capabilities}
   spec.homepage      = "https://github.com/ndlib/bunyan_capybara"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
