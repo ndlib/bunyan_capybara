@@ -24,16 +24,19 @@ module Bunyan
   # we run any of the examples.
   #
   # @note Call this method no more than once per spec
-  def self.instantiate_all_loggers!(config: ENV)
+  def self.instantiate_all_loggers!(config: ENV, path:)
     raise "You already called instantiate_all_loggers!" if @called
     @called = true
     layout = Logging.layouts.pattern(format_as: :json, date_pattern: "%Y-%m-%d %H:%M:%S.%L")
     Logging.appenders.stdout(layout: layout)
-    entries = Dir.glob(File.expand_path('~/git/QA_tests/spec/*', __FILE__))
+    if !File.exist?(File.expand_path('~/bunyan_logs'))
+      Dir.mkdir(File.expand_path('~/bunyan_logs'))
+    end
+    entries = Dir.glob(File.expand_path(path + '/*', __FILE__))
     entries.each do |entry|
       application_name_under_test = entry.split('/').last
       logger = Logging.logger[application_name_under_test]
-      log_filename = File.expand_path("~/git/QA_tests/logs/#{application_name_under_test}.log", __FILE__)
+      log_filename = File.expand_path("~/bunyan_logs/#{application_name_under_test}.log", __FILE__)
       logger.add_appenders('stdout', Logging.appenders.file(log_filename, layout: layout))
       logger.level = config.fetch('LOG_LEVEL', DEFAULT_LOG_LEVEL).to_sym
     end
@@ -221,6 +224,7 @@ module Bunyan
       end
 
       def initialize_example_variables!
+        require 'byebug'; debugger
         @example_variable = BunyanVariableExtractor.call(path: @example.metadata.fetch(:absolute_file_path), config: config)
       end
   end
