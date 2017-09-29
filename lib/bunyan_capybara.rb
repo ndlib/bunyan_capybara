@@ -224,7 +224,6 @@ module Bunyan
       end
 
       def initialize_example_variables!
-        require 'byebug'; debugger
         @example_variable = BunyanVariableExtractor.call(path: @example.metadata.fetch(:absolute_file_path), config: config)
       end
   end
