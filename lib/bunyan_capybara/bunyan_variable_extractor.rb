@@ -6,8 +6,8 @@ module BunyanVariableExtractor
   # @note If we start nesting our specs, this may need to be revisited.
   def self.call(path:, config:)
     if path.include?('rspec-core')
-      application_name_under_test = 'QQQQQQQQQQQQQQQQQQQQQ'
-      BunyanVariable.new(application_name_under_test, nil, nil, nil)
+      application_name_under_test = ARGV[0].split('/')[1]
+      BunyanVariable.new(application_name_under_test, "suite", nil, nil)
     else
       path_to_spec_directory = File.expand_path('~/git/QA_tests/spec/', __FILE__)
       spec_sub_directory = path.sub("#{path_to_spec_directory}/", '').split('/')

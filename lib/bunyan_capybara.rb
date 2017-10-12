@@ -157,14 +157,20 @@ module Bunyan
     # Responsible for logging the start of a test
     # @return [ExampleLogging::ExampleWrapper]
     def start
-      info(context: "BEGIN example", example: example.full_description, location: example.location)
-      self
+      if example.description.include?('suite')
+        self
+      else
+        info(context: "BEGIN example", example: example.full_description, location: example.location)
+        self
+      end
     end
 
     # Responsible for consistent logging of the end steps of a test
     # @return [ExampleLogging::ExampleWrapper]
     def stop
-      info(context: "END example", example: example.full_description, location: example.location)
+      if !example.description.include?('suite')
+        info(context: "END example", example: example.full_description, location: example.location)
+      end
     end
 
     public
