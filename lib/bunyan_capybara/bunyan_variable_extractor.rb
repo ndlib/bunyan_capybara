@@ -9,10 +9,10 @@ module BunyanVariableExtractor
       application_name_under_test = ARGV[0].split('/')[1]
       BunyanVariable.new(application_name_under_test, "suite", nil, nil)
     else
-      path_to_spec_directory = File.expand_path('~/git/QA_tests/spec/', __FILE__)
       spec_sub_directory = path.match('spec/').post_match.split('/')
       application_name_under_test = spec_sub_directory[0]
       test_type = spec_sub_directory[1]
+      path_to_spec_directory = path.match(application_name_under_test).pre_match
       environment_under_test = config.fetch('ENVIRONMENT', Bunyan::DEFAULT_ENVIRONMENT)
       BunyanVariable.new(application_name_under_test, test_type, path_to_spec_directory, environment_under_test)
     end
