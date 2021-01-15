@@ -2,6 +2,7 @@ require "bunyan_capybara/version"
 require "bunyan_capybara/bunyan_variable_extractor"
 require "bunyan_capybara/bunyan_constants"
 
+require "capybara"
 require "capybara/node/element"
 class Capybara::Node::Element
   # As much as I would like to leverage a module mixin and `super`, I am not able to get this to work

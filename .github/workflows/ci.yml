@@ -1,0 +1,39 @@
+name: Bunyan Capybara CI
+
+on: 
+  push:
+    branches-ignore: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-and-test: 
+  # Run this on the Ubuntu 20.04 LTS, the most recent LTS version as of 2021-01-13
+    runs-on: ubuntu-20.04
+  
+  # Run steps to build project and then run internal test suite
+    steps:
+      - uses: actions/checkout@v2
+
+  # Setup Ruby
+      - name: Setup Ruby versions
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.4
+  
+  # Install bundler Gem
+      - name: Install bundler
+        run: gem install bundler -v 1.14.6 # This matches what was in the TravisCI file
+  
+  # Remove bundler Gem @ v2
+      - name: Uninstall bunder
+        run: gem uninstall bundler -v 2.2.5
+
+  # Install gems
+      - name: Install Ruby gems
+        run: bundle install
+
+  # Run test suite
+      - name: Run tests
+        run: rake spec
+    
